@@ -1,0 +1,3 @@
+cd project
+source ~/yolo-pi/bin/activate
+sudo /home/pi/yolo-pi/bin/python app.py
